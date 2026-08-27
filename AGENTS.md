@@ -36,6 +36,7 @@
 - **格式**：Conventional Commits：`type(scope): 中文摘要`；`type` 限定为 `feat|fix|refactor|docs|test|chore|style|perf|build|ci|revert`。
 - **命名**：`scope` 必填，使用真实模块的小写英文，禁止 `misc|temp|update`；摘要须具体，避免“更新”“调整”“修改代码”。
 - **拆分**：按模块/关注点提交；功能、重构、文档、测试原则上分开，除非强耦合且拆分后不可用。
+- **粒度与推送**：以最小可独立成立的能力为单位拆分，完成一个能力就提交一次并立即推送一次；禁止大量修改只产生少量提交。同时不刻意堆砌提交数：内容高度相似的琐碎改动（如零散几行注释、格式微调）合并为一次提交，禁止同类改动重复拆分。
 - **提交前**：检查 `git status`、`git diff --cached`，确保暂存内容、类型、标题一致且无无关文件。
 
 ## SSH、Jenkins 与 CI/CD
