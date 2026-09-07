@@ -26,6 +26,7 @@
 
 ## 并发会话隔离
 
+- **简单任务**：仅涉及单文件或少量局部改动、风险低且可快速完成时，禁止为该任务新建 Git Worktree，直接在当前工作区处理；已确认存在其他会话并行修改同一仓库时，仍以并发隔离规则为准。
 - **外置盘根目录**：Codex 工作区、缓存和临时产物统一使用 `/Volumes/File/codex/`。外置盘未挂载或目录不可写时必须停止并告知用户，禁止回退到内置盘目录。
 - **工作区**：多个 Codex 会话并行修改同一仓库时必须使用独立 Git Worktree，禁止共用工作目录；Codex 管理的 Worktree 根目录固定为 `/Volumes/File/codex/worktrees/`。
 - **产物**：缓存和临时产物按 `$CODEX_THREAD_ID` 隔离，统一放入 `/Volumes/File/codex/artifacts/$CODEX_THREAD_ID/`；iOS 使用 `-derivedDataPath "/Volumes/File/codex/derived-data/$CODEX_THREAD_ID"`，禁止使用内置盘的 `$TMPDIR` 存放构建产物。占用或损坏时新建本会话目录，禁止复用他人目录。
