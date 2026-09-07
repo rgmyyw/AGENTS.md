@@ -26,9 +26,9 @@
 
 ## 并发会话隔离
 
-- **简单任务**：仅涉及单文件或少量局部改动、风险低且可快速完成时，禁止为该任务新建 Git Worktree，直接在当前工作区处理；已确认存在其他会话并行修改同一仓库时，仍以并发隔离规则为准。
+- **简单任务**：仅涉及单文件或少量局部改动、风险低且可快速完成，并确认其他会话未修改相同文件或相关调用链时，必须直接在当前分支和当前工作区处理，禁止创建 Git Worktree。
 - **外置盘根目录**：Codex 工作区、缓存和临时产物统一使用 `/Volumes/File/codex/`。外置盘未挂载或目录不可写时必须停止并告知用户，禁止回退到内置盘目录。
-- **工作区**：多个 Codex 会话并行修改同一仓库时必须使用独立 Git Worktree，禁止共用工作目录；Codex 管理的 Worktree 根目录固定为 `/Volumes/File/codex/worktrees/`。
+- **工作区**：仅当多个 Codex 会话的改动范围重叠、涉及相同文件或相关调用链，存在实际冲突风险时，才必须使用独立 Git Worktree；确认改动范围互不影响时允许直接使用当前分支和当前工作区。Codex 管理的 Worktree 根目录固定为 `/Volumes/File/codex/worktrees/`。
 - **产物**：缓存和临时产物按 `$CODEX_THREAD_ID` 隔离，统一放入 `/Volumes/File/codex/artifacts/$CODEX_THREAD_ID/`；iOS 使用 `-derivedDataPath "/Volumes/File/codex/derived-data/$CODEX_THREAD_ID"`，禁止使用内置盘的 `$TMPDIR` 存放构建产物。占用或损坏时新建本会话目录，禁止复用他人目录。
 - **清理**：仅清理本会话资源；并行期间禁止删除全局 DerivedData，或在共享目录执行 `xcodebuild clean`、`flutter clean`、`./gradlew clean`。
 - **共享资源**：Simulator、Emulator、端口、后台服务和构建进程应隔离；无法隔离时串行执行，禁止停止其他会话资源。
