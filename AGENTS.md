@@ -22,6 +22,7 @@
 - **Flutter**：必须使用 FVM，遵循 `.fvmrc` / `.fvm/`，命令使用 `fvm flutter ...` 或 `fvm dart ...`。
 - **Android**：必须使用项目 `./gradlew` 和锁定的 Gradle、AGP、JDK，禁止直接使用全局 Gradle。
 - **iOS**：存在 `Gemfile` 时，Fastlane 及相关 Ruby 工具必须通过 `bundle exec`；构建显式指定 workspace/project、scheme、configuration。
+- **iOS Simulator**：禁止创建临时、会话专用、克隆或以 Codex 命名的 Simulator，禁止使用 `xcrun simctl create`、`xcrun simctl clone` 或会自动生成测试 Simulator 的并行测试配置；只能复用 `xcrun simctl list devices` 中已有的系统默认设备，并通过固定 UDID 指定目标。没有兼容设备时必须停止并告知用户，禁止在 `~/Library/Developer/CoreSimulator/Devices/` 下新增设备或回退创建临时设备。
 - **环境/生成**：构建前核对 Flutter flavor、Android productFlavor/buildType、iOS scheme/configuration 映射；生成文件使用项目脚本，未经任务要求不得升级工具链或依赖锁文件。
 
 ## 并发会话隔离
