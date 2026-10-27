@@ -65,6 +65,11 @@
 - **Greptile**：用于远程 PR/MR、已有评审、评论和知识库；本地代码以当前源码和 CodeGraph 为准；未经明确要求不得触发新评审。
 - **蓝湖**：用户提供链接或明确提及时使用；设计稿先取设计列表，PRD/原型先取页面与全局概览；留言等写操作须明确授权。
 
+## Codex 浏览器
+
+- **禁用 AutoGLM**：禁止在 Codex 中读取、调用或执行 `autoglm-browser-agent` Skill 及 `autoglm` 命令，即使请求包含网站名称或 URL。
+- **工具路由**：网页任务优先使用目标系统专用 MCP、Codex Browser/Chrome 或 CUA；需要终端浏览器自动化和可重复测试时使用 Playwright。
+
 <!-- CODEGRAPH_START -->
 ## CodeGraph
 
