@@ -36,6 +36,7 @@
 
 - **简单任务**：单文件或少量局部改动、风险低且无实际冲突时直接使用当前工作区，禁止创建 Worktree。
 - **外置盘**：工作区、缓存和临时产物统一使用 `/Volumes/File/codex/`；未挂载或不可写时停止并告知用户，禁止回退到内置盘。
+- **内置盘清洁**：凡可放置于外置盘的工作区、工具运行时、依赖、模型、容器卷、下载、缓存、临时文件和任务产物，必须使用 `/Volumes/File/codex/`，禁止在内置盘保留副本。任务完成后应主动清理本任务产生且已确认不再需要的内置盘临时文件、缓存、安装包和残留；只清理本任务创建的资源，不得删除用户已有数据、共享缓存或其他会话资源。
 - **Worktree**：仅在多个会话改动范围重叠并存在实际冲突风险时使用；根目录固定为 `/Volumes/File/codex/worktrees/`。
 - **产物**：按 `$CODEX_THREAD_ID` 隔离到 `/Volumes/File/codex/artifacts/$CODEX_THREAD_ID/`；iOS 使用 `-derivedDataPath "/Volumes/File/codex/derived-data/$CODEX_THREAD_ID"`，禁止使用内置盘 `$TMPDIR`。
 - **清理与共享资源**：仅清理本会话资源；禁止删除全局 DerivedData 或在共享目录执行 clean。Simulator、Emulator、端口、后台服务和构建进程无法隔离时串行执行，禁止停止其他会话资源。
