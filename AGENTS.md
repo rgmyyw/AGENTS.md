@@ -17,7 +17,7 @@
 - **test**：`ecc:tdd-workflow` 负责测试运行器、RED/GREEN 证据和阶段放行；Matt `tdd` 可作为默认测试设计方法，补充 seam、行为测试、垂直切片和反模式，但不得另起一轮流程。纯文档、配置或无法自动测试的任务必须建立变更前基线与可重复验证命令。
 - **implement**：RED 或基线成立后，由匹配的项目/领域 Skill 实现；已有规格或 tickets 时可用 Matt `implement`/`implement-spec` 组织工作，但不得自行 commit、扩大范围或绕过项目命令。遵循现有架构，禁止夹带无关重构和依赖升级。
 - **diagnose**：复杂、间歇性或性能问题可优先用 Matt `diagnosing-bugs` 建立假设与证据循环，但修复仍回到 ECC 的 `test → implement`，临时日志遵循本文件的调试日志规则。
-- **review**：必须先完成 ECC 需求一致性、逻辑、边界、回归、错误处理、安全和测试质量审查；需要“规范 + Spec”双轴评审时可增加 Matt `code-review`，其多 Agent 步骤仅在用户明确允许多 Agent 时执行。CodeRabbit 仍仅在用户明确要求时触发。
+- **review**：普通评审仅使用 ECC 检查需求一致性、逻辑、边界、回归、错误处理、安全和测试质量。只有用户明确要求 Matt 的“规范 + Spec”双轴评审且明确允许多 Agent 时，才增加 Matt `code-review`；CodeRabbit 仍仅在用户明确要求时触发。
 - **verify**：使用 `ecc:verification-loop` 按项目能力执行构建、类型检查、Lint、相关测试/覆盖率、安全检查和 Diff 复核，输出真实 PASS/FAIL；失败必须返回对应阶段，不得宣称完成。
 - **remember**：交付前执行记忆判定。复杂任务、调试、返工、回滚或非显而易见决策使用 `ecc:growth-log` 搜索并合并重复经验；简单任务明确说明“无可复用记忆”，不得擅自创建共享文档。
 
