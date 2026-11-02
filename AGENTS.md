@@ -23,6 +23,7 @@
 
 ## 通用边界
 
+- **非变更请求**：纯问答、解释、翻译、总结和只读状态查询不进入交付生命周期，不创建 `plan/test/implement/review/verify/remember` 阶段；只读诊断或代码评审仅使用对应的 `diagnose` 或 `review` 阶段，除非用户同时要求修复或修改。
 - **开始门禁**：所有功能开发、缺陷修复、重构、配置或行为变更都必须完成适用的 `plan` 与 `test` 证据后再编辑实现；禁止先实现后补流程。任一阶段不适用时必须给出理由和证据。
 - **Matt 项目初始化与发布**：`setup-matt-pocock-skills`、`triage`、`to-spec`、`to-tickets`、`wayfinder` 等涉及项目文件、Issue、标签或 tracker 的操作，只有用户明确要求对应写操作时才执行。
 - **ECC 兼容性**：仅使用当前 Codex 实际暴露的 `ecc:*` 能力。Codex 原生 Hook 可按插件清单验证后使用；Claude 专属 Hook profile、命令、Agent 和目录约定不得直接套用。AgentShield 仅在已安装并审查 runner 后才视为可执行能力。
