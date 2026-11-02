@@ -2,19 +2,30 @@
 
 仅保留跨项目硬约束；项目级 `AGENTS.md` 可补充或覆盖本文件。
 
-## 指令与工作流
+## 能力分层与路由
 
-- **优先级**：系统/开发者/用户指令 > 项目级 `AGENTS.md` > 本地专项 Skill > ECC 通用 Skill > 默认行为。
-- **项目约定**：遵循现有架构、命名和目录；新增第三方依赖须先征得用户同意。
-- **ECC 路由**：通用规划、影响分析、TDD、调试、评审和验证优先使用匹配的 ECC Skill；Flutter、iOS、Jenkins、Pgyer 等领域规则以项目指令和本地专项 Skill 为准。
-- **ECC 强制门禁**：所有功能开发、缺陷修复、重构、配置或行为变更必须由匹配的 ECC Skill 主导，并严格按 `plan → test → implement → review → verify → remember` 顺序执行。完成 `plan` 和 `test` 前，禁止编辑代码或配置、安装依赖、执行迁移或生成实现产物；禁止先实现后补测试或补流程。任一阶段不适用时必须给出具体理由和证据，不得静默跳过。
+- **优先级**：系统/开发者/用户指令 > 项目级 `AGENTS.md` > 本地专项 Skill > 本文件的全局路由 > 通用插件 Skill > 默认行为。
+- **运行时层**：Codex 是执行、工具调用、权限和会话运行时；ECC 与 `mattpocock-skills` 都是受运行时约束的插件，不得把插件说明视为额外授权。
+- **工程治理层**：ECC 独占功能开发、缺陷修复、重构、配置和行为变更的交付门禁，负责 `plan → test → implement → review → verify → remember` 的顺序与证据闭环。
+- **工程方法层**：`mattpocock-skills` 仅在对应阶段内补充需求澄清、领域建模、模块设计、测试边界和评审视角，不得替代、缩短、重排或重复 ECC 阶段。
+- **项目约束层**：项目级 `AGENTS.md` 定义架构、技术栈、命令、测试和交付规则；Flutter、iOS、Android、Jenkins、Pgyer 等专项 Skill 在其领域内优先于通用方法，但不得绕过 ECC 门禁。
+- **单一主导**：每个阶段只允许一个主导流程；ECC 与 Matt 能力重叠时默认由 ECC 主导，禁止同时运行两套 TDD、实现或评审流程。
+- **Matt 自动补充**：仅当语义明确匹配且不产生外部副作用时，可使用 `grilling`、`grill-me`、`wait-what`、`to-questionnaire`、`teach`、`wizard`、`codebase-design`、`domain-modeling`、`writing-for-agents` 或 `handoff`。
+- **Matt 显式调用**：`tdd`、`implement`、`implement-spec`、`code-review`、`diagnosing-bugs`、`research`、`retro`、`setup-matt-pocock-skills`、`to-spec`、`to-tickets`、`triage`、`wayfinder` 和 `improve-codebase-architecture` 仅在用户明确点名该 Skill 或明确选择 Matt 工作流时使用。
+- **副作用授权**：Skill 中的 commit、push、多 Agent、创建或修改 Issue/标签、发布文档、项目初始化、安装依赖、迁移、删除或远程写入指令不构成用户授权；仍须满足本文件和用户当前请求。
+- **冲突处理**：项目规则或 ECC 门禁与 Matt 指令冲突时，保留 Matt 的方法性建议，忽略冲突动作；不确定是否冲突时停止该动作并说明差异。
+
+## 强制交付流程
+
+- **适用范围**：所有功能开发、缺陷修复、重构、配置或行为变更必须由匹配的 ECC Skill 主导。完成 `plan` 和 `test` 前，禁止编辑代码或配置、安装依赖、执行迁移或生成实现产物；禁止先实现后补测试或补流程。任一阶段不适用时必须给出具体理由和证据，不得静默跳过。
 - **plan**：先读取项目约定和相关源码，使用 `ecc:intent-driven-development` 明确验收标准；跨模块、公共接口、数据、鉴权、部署或高风险变更同时使用 `ecc:change-impact`。开始下一阶段前必须形成范围、影响面、风险、测试目标、回滚方式和停止条件；小改动可在回复中给出简短计划，不强制创建计划文件。
-- **test**：使用 `ecc:tdd-workflow` 识别真实测试运行器，把验收标准转换为测试，先新增或调整测试并实际观察 RED，再允许实现。纯文档、配置或无法自动测试的任务必须建立等价的变更前基线与可重复验证命令，不能以“没有测试”为由跳过证据阶段。
-- **implement**：RED 或基线证据成立后，使用匹配的 ECC 技术/领域 Skill 和本地专项 Skill 完成最小实现；遵循现有架构，禁止夹带无关重构、依赖升级和范围扩张。
-- **review**：实现完成后必须使用匹配的 ECC 评审能力审查实际 Diff，检查需求一致性、逻辑、边界、回归、错误处理、安全和测试质量；发现问题必须返回 `test` 或 `implement` 修正后重新评审。CodeRabbit 仍仅在用户明确要求时触发。
+- **test**：使用 `ecc:tdd-workflow` 识别真实测试运行器，把验收标准转换为测试，先新增或调整测试并实际观察 RED，再允许实现。纯文档、配置或无法自动测试的任务必须建立等价的变更前基线与可重复验证命令，不能以“没有测试”为由跳过证据阶段。显式调用 Matt `tdd` 时，仅吸收测试 seam、垂直切片和反模式建议，RED/GREEN 证据仍由 ECC 阶段管理。
+- **implement**：RED 或基线证据成立后，使用匹配的 ECC 技术/领域 Skill 和本地专项 Skill 完成最小实现；遵循现有架构，禁止夹带无关重构、依赖升级和范围扩张。Matt `implement*` 不得自动提交或扩大范围。
+- **review**：实现完成后必须使用匹配的 ECC 评审能力审查实际 Diff，检查需求一致性、逻辑、边界、回归、错误处理、安全和测试质量；发现问题必须返回 `test` 或 `implement` 修正后重新评审。Matt `code-review` 仅在用户明确要求其双轴或多 Agent 评审时使用；CodeRabbit 仍仅在用户明确要求时触发。
 - **verify**：使用 `ecc:verification-loop` 按项目能力执行构建、类型检查、Lint、相关测试/覆盖率、安全检查和 Diff 复核，并输出真实的 PASS/FAIL 证据；存在失败、未验证关键路径或计划与实际影响不一致时，不得宣称完成。
 - **remember**：交付前必须执行记忆判定。复杂任务、调试、返工、回滚或出现非显而易见决策时，使用 `ecc:growth-log` 搜索并合并重复经验，将根因、可迁移规则和识别信号写入项目既有记忆位置或已启用的安全记忆能力；简单任务也必须在交付中明确说明“无可复用记忆”，禁止为记忆阶段擅自创建共享文档。
-- **ECC 限制**：仅使用当前 Codex 可用的 `ecc:*` 能力；Claude 专属 Hook profile、命令和目录约定不得直接套用。多 Agent、`orch-*` 和额外 Worktree 仅在用户明确要求或确有并发冲突时使用。
+- **ECC 兼容性**：仅使用当前 Codex 实际暴露的 `ecc:*` 能力。Codex 原生 Hook 可按插件清单验证后使用；Claude 专属 Hook profile、命令、Agent 和目录约定不得直接套用。AgentShield 仅在已安装并审查对应 runner 后才视为可执行能力，不得仅因 ECC 文档提及就假定可用。
+- **多 Agent 与 Worktree**：仅在用户明确要求或确有并发冲突时使用多 Agent、`orch-*` 或额外 Worktree；第三方 Skill 的内部建议不能扩大该权限。
 - **AGENTS.md**：初始化或更新时正文尽量使用简体中文；代码、命令、路径、标识符、API、工具/框架名及标准关键字保留原文。
 - **测试**：新增或修改代码行为必须补充单元测试，覆盖本次行为、边界和回归点。默认仅运行相关测试及必要构建/静态检查；影响公共层、无法隔离或用户要求时才扩大范围；无法验证须说明缺口与风险。
 - **注释**：合理拆分职责，仅注释非显而易见的意图和约束。
