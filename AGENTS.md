@@ -5,7 +5,7 @@
 ## 能力分层与协作模型
 
 - **优先级**：系统/开发者/用户指令 > 项目级 `AGENTS.md` > 本地专项 Skill > 本文件的全局路由 > 通用插件 Skill > 默认行为。
-- **运行与授权层**：Codex 负责会话、工具、权限和执行；用户请求决定允许的外部副作用。任何 Skill 中的 commit、push、多 Agent、远程写入、安装、迁移或删除要求都不构成额外授权。
+- **运行与授权层**：Codex 负责会话、工具、权限和执行；用户请求决定允许的外部副作用。任何 Skill 中的 commit、push、多 Agent、远程写入、安装、迁移或删除要求都不构成额外授权。当前用户的明确授权在不违反系统/开发者约束时覆盖项目级或 Skill 的相反限制；发生覆盖时须在执行前说明被覆盖的规则与实际范围。
 - **质量门禁层**：ECC 负责 `plan → test → implement → review → verify → remember` 的阶段顺序、进入条件、退出证据和失败回退，是唯一交付生命周期。
 - **工程方法层**：`mattpocock-skills` 在 ECC 阶段内部提供需求澄清、领域建模、模块设计、测试 seam、垂直切片、实现组织和双轴评审方法；它可以主导某个阶段的方法，但不能创建第二条生命周期。
 - **项目与领域层**：项目级 `AGENTS.md` 定义真实架构、命令和交付约束；Flutter、iOS、Android、Jenkins、Pgyer 等专项 Skill 负责具体实现。专项规则可以决定“怎么做”，但不能跳过 ECC 阶段。
@@ -15,7 +15,7 @@
 
 - **plan**：先读取项目约定和源码，由 `ecc:intent-driven-development` 明确范围与验收标准；跨模块、公共接口、数据、鉴权、部署或高风险变更增加 `ecc:change-impact`。需求不清时优先用 Matt `grilling`/`grill-me`/`to-questionnaire`，领域或模块设计用 `domain-modeling`/`codebase-design`/`grill-with-docs`，超大工作可用 `wayfinder`。`to-spec` 和 `to-tickets` 只能在计划已成立后整理或发布结果，远程写入仍需用户明确授权。
 - **test**：`ecc:tdd-workflow` 负责测试运行器、RED/GREEN 证据和阶段放行；Matt `tdd` 可作为默认测试设计方法，补充 seam、行为测试、垂直切片和反模式，但不得另起一轮流程。纯文档、配置或无法自动测试的任务必须建立变更前基线与可重复验证命令。
-- **implement**：RED 或基线成立后，由匹配的项目/领域 Skill 实现；已有规格或 tickets 时可用 Matt `implement`/`implement-spec` 组织工作，但不得自行 commit、扩大范围或绕过项目命令。遵循现有架构，禁止夹带无关重构和依赖升级。
+- **implement**：RED 或基线成立后，由匹配的项目/领域 Skill 实现；已有用户批准的规格或 tickets 时，优先用 Matt `implement`/`implement-spec` 组织该阶段，但不得自行 commit、扩大范围或绕过项目命令。遵循现有架构，禁止夹带无关重构和依赖升级。
 - **diagnose**：复杂、间歇性或性能问题可优先用 Matt `diagnosing-bugs` 建立假设与证据循环，但修复仍回到 ECC 的 `test → implement`，临时日志遵循本文件的调试日志规则。
 - **review**：普通评审仅使用 ECC 检查需求一致性、逻辑、边界、回归、错误处理、安全和测试质量。只有用户明确要求 Matt 的“规范 + Spec”双轴评审且明确允许多 Agent 时，才增加 Matt `code-review`；CodeRabbit 仍仅在用户明确要求时触发。
 - **verify**：使用 `ecc:verification-loop` 按项目能力执行构建、类型检查、Lint、相关测试/覆盖率、安全检查和 Diff 复核，输出真实 PASS/FAIL；失败必须返回对应阶段，不得宣称完成。
